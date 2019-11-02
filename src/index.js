@@ -1,41 +1,56 @@
-import Quest from "./quest.js";
-import { createVerify } from "crypto";
+import { InventoryRequirement, ActionRequirement, Quest } from "./quest.js";
 import spritesheet from './colored.png';
 import './style.css';
 import './components'
 import './scenes'
 
-function build_quest(){
-    const quest = {
+function build_quest(character){
+    const quest_tree = {
         "_main":"find-golden-fleece",
         "find-golden-fleece":{
             "depends":["row-across-sea","put-dragon-to-sleep"],
         },
         "row-across-sea":{
-            "depends":["find-boat","find-paddle"],
-            "requires":["row-across-sea"],
-        },
-        "find-boat":{
-            "requires":["boat"],
-        },
-        "find-paddle":{
-            "requires":["paddle"],
+            "requires_items":["boat","paddle"],
+            "requires_actions":["row-across-sea"],
         },
         "put-dragon-to-sleep":{
             "depends":["make-sleep-potion"],
-            "requires":["convince-dragon","feed-sleeping-potion-to-dragon"],
+            "requires_actions":["convince-dragon","feed-sleeping-potion-to-dragon"],
         },
         "make-sleep-potion":{
-            "requires":["get-sleepy-tree-leaf"],
-            "actions":["mix-potion"],
+            "requires_items":["sleepy-tree-leaf"],
+            "requires_actions":["mix-potion"],
         },
     }
-    return quest;
+
+    function assemble_quest(obj,name){
+        console.log("assembling",name,obj);
+        const q = new Quest(name);
+        if( obj.depends != undefined ){
+            obj.depends.forEach( subq => {
+                q.add_dependency(assemble_quest(quest_tree[subq],subq));
+            });
+        }
+        if( obj.requires_item != undefined){
+            obj.requires_item.forEach( rqi => {
+                q.add_requirement(new InventoryRequirement(rqi,null)); 
+            })
+        }
+        if( obj.requires_actions != undefined){
+            obj.requires_actions.forEach( rqa => {
+                q.add_requirement(new ActionRequirement(rqa,null));
+            })
+        }
+        return q;
+    }
+    
+    return assemble_quest(quest_tree[quest_tree._main],quest_tree._main);
 }
 
 function main(){
     const quest = build_quest();
-
+    console.log("Quest: ",quest.describe());
     console.log(spritesheet);
 
     // Using kenney.nl 1bit
@@ -49,7 +64,8 @@ function main(){
             "character": [31,0],
             "grass1": [5,0],"grass2": [6,0],"grass3": [7,0],
             "tree1": [0,1],"tree2": [1,1],"tree3": [2,1],"tree4": [3,1],
-            "fleece": [16,30],
+            // Pickups
+            "fleece": [16,22],"sword": [0,31], "shield": [6,25],
         }
     }
 

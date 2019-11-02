@@ -1,6 +1,7 @@
 import SimplexNoise from 'simplex-noise';
-const TILESZ = {x:32,y:32};
+import { build_quest } from "../quest.js";
 
+const TILESZ = {x:32,y:32};
 
 Crafty.scene("world", function(){
     // Generate trees
@@ -20,15 +21,18 @@ Crafty.scene("world", function(){
             }
         }
     }
+    
+    ['fleece','sword','shield'].forEach( f => {
+        Crafty.e(`Pickup, ${f}`).attr({ 
+            x:Math.random()*Crafty.viewport.width, 
+            y:Math.random()*Crafty.viewport.height,
+            item: f
+        });
+    })
+    const player = Crafty.e('Character').attr({x:400,y:400,z:1000,name:"Wilbur"});
 
-    Crafty.e('2D, DOM, character, Fourway, Collision').attr(
-        {x:400,y:400,w:32,h:32}
-        ).fourway(100, {normalize: true}) 
-        .onHit('StaticBody',function(){
-            this.velocity({x:0,y:0})
-        })
+    console.log("Building Quest");
+    const quest = build_quest();
+    console.log("Quest: ",quest.describe(player.name),quest);
 
-    Crafty.e('2D, DOM, fleece, StaticBody').attr(
-        {x:(Math.random()*Crafty.viewport.width), y:Math.random()* Crafty.viewport.height}
-    )
-})
+});
