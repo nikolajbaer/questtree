@@ -33,16 +33,26 @@ a {
 h3 {
     font-size: 12pt;
 }
-#quest {
+.overlay {
     position: fixed;
+    padding: 4px;
+    color: #43313d;
+    background-color: rgba(201,196,182,0.9); 
+    z-index: 1000;
+}
+.overlay h3 { text-align: center; }
+#quest {
     left: 0px;
     top: 200px;
-    padding: 4px;
     width: 300px;
     min-height: 50px;
-    color: #43313d;
-    background-color: rgba(201,196,182,0.5); 
-    z-index: 1000;
+}
+
+#inventory {
+    right: 0px;
+    top: 200px;
+    width: 300px;
+    min-height: 50px;
 }
 
 .popup {

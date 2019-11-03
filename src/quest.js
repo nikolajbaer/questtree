@@ -89,22 +89,13 @@ export class ActionRequirement extends BaseRequirement {
 
 export function build_quest(){
     const quest_tree = {
-        "_main":"find-golden-fleece",
-        "find-golden-fleece":{
-            "depends":["row-across-sea","put-dragon-to-sleep"],
+        "_main":"find-fleece",
+        "find-fleece":{
+            "depends":["find-sword"],
             "requires_items":["fleece"],
         },
-        "row-across-sea":{
-            "requires_items":["boat","paddle"],
-            "requires_actions":["row-across-sea"],
-        },
-        "put-dragon-to-sleep":{
-            "depends":["make-sleep-potion"],
-            "requires_actions":["convince-dragon","feed-sleeping-potion-to-dragon"],
-        },
-        "make-sleep-potion":{
-            "requires_items":["sleepy-tree-leaf"],
-            "requires_actions":["mix-potion"],
+        "find-sword":{
+            "requires_items":["sword","shield"],
         },
     }
 

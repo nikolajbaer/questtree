@@ -9,37 +9,46 @@
     <h1>Procjam 2019 - Quest Tree</h1>
     <h2 class="subtitle">by <a href="https://nikolaj.itch.io/">Nikolaj Baer</a></h2>
     <div id="game"></div>
-    <div id="quest">
+    <div class="overlay" id="quest">
         <h3>Your Quest</h3>
         <div class="quest_display">
         </div>
     </div>
+    <div class="overlay" id="inventory">
+        <h3>Your Stuff</h3>
+        <div class="inventory_display">
+            nothing yet! 
+        </div>
+    </div>
     <div class="popup">
         <div class="content">
-            <p>Hi There!</p>
-            <p>This is a <a href="https://itch.io/jam/procjam">2019 ProcJam</a> project where I am trying to
-            dynamically generate a "Quest" for an RPG-like game, using a dependency tree as my model. I don't 
-            think this is particularily new territory, but here are my rough goals.</p>
-            <h3>Core Goals</h3>
-            <ul>
-                <li>Create a dynamic quest with multiple sub-quests buit out of actions and pickups</li>
-                <li>Create a top-level narrative summary that makes sense</li>
-            </ul>
-            <h3>Stretch Goals</h3>
-            <ul>
-                <li>Create multiple resolutions to quests, so there are multiple ways to solve it</li>
-                <li>Create some sort of storyline that fits, and possibly intertwines with the quest</li>
-                <li>Make it fun</li>
-            </ul>
-            <p>
-                Hopefully I get some of this done!,<br>
-                - <a href="https://www.nikolajbaer.us">Nikolaj</a>
-            </p>
-            <p>
-                <i>PS - The awesome sprites are from <a href="https://kenney.nl">Kenney.nl</a>, and game is built on the very elegant <a href="http://craftyjs.com/">Crafty.js</a>! Check out my <a href="https://github.com/nikolajbaer/procjam2019-questtree">source code</a> if you are curious!</i>
-            </p>
         </div>
         <button class="close">Close</button>
     </div>
+
+    <script type="text/html" id="intro">
+        <p>Hi There!</p>
+        <p>This is a <a href="https://itch.io/jam/procjam">2019 ProcJam</a> project where I am trying to
+        dynamically generate a "Quest" for an RPG-like game, using a dependency tree as my model. I don't 
+        think this is particularily new territory, but here are my rough goals.</p>
+        <h3>Core Goals</h3>
+        <ul>
+            <li>Create a dynamic quest with multiple sub-quests buit out of actions and pickups</li>
+            <li>Create a top-level narrative summary that makes sense</li>
+        </ul>
+        <h3>Stretch Goals</h3>
+        <ul>
+            <li>Create multiple resolutions to quests, so there are multiple ways to solve it</li>
+            <li>Create some sort of storyline that fits, and possibly intertwines with the quest</li>
+            <li>Make it fun</li>
+        </ul>
+        <p>
+            Hopefully I get some of this done!,<br>
+            - <a href="https://www.nikolajbaer.us">Nikolaj</a>
+        </p>
+        <p>
+            <i>PS - The awesome sprites are from <a href="https://kenney.nl">Kenney.nl</a>, and game is built on the very elegant <a href="http://craftyjs.com/">Crafty.js</a>! Check out my <a href="https://github.com/nikolajbaer/procjam2019-questtree">source code</a> if you are curious!</i>
+        </p>
+    </script>
 </body>
 </html>

@@ -10,8 +10,10 @@ assetsObj.sprites[spritesheet] = {
     "paddingY": 1,
     "map": {
         "character": [31,0],
+        "dirt1": [1,0],"dirt2": [2,0],"dirt3":[3,0],
         "grass1": [5,0],"grass2": [6,0],"grass3": [7,0],
         "tree1": [0,1],"tree2": [1,1],"tree3": [2,1],"tree4": [3,1],
+        "bones": [0,15],
         // Pickups
         "fleece": [16,22],"sword": [0,31], "shield": [6,25],
     }

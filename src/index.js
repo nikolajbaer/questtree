@@ -6,14 +6,13 @@ import * as _ from 'lodash'
 
 var popup_div = null;
 const popup_queue = [];
-
+var popup_displayed = false;
 function show_popup(html){
-    if(html != null){
-        popup_div.children[0].innerHTML = html;
-    }
+    popup_displayed = true;
+    popup_div.children[0].innerHTML = html;
     popup_div.style.display = "block";
 }
-window.show_popup = show_popup;
+window.popup_queue = popup_queue;
 
 function main(){
 
@@ -24,6 +23,7 @@ function main(){
             show_popup(popup_queue.shift());
         }else{
             popup_div.style.display = "none";
+            popup_displayed = false;
             if(Crafty.isPaused()){
                 Crafty.pause();
             }
@@ -31,7 +31,7 @@ function main(){
     })
 
     if(window.localStorage != undefined && window.localStorage.getItem("questtree-intro") == null){
-        show_popup(); // show intro popup
+        show_popup(document.getElementById("intro").innerHTML); // show intro popup
         window.localStorage.setItem("questtree-intro","shown");
     }
 
@@ -40,7 +40,9 @@ function main(){
     Crafty.bind("showMessages", messages => {
         if(!Crafty.isPaused()){ Crafty.pause(); }
         messages.forEach( msg => { popup_queue.push(msg) })
-        show_popup(popup_queue.shift());
+        if(!popup_displayed){
+            show_popup(popup_queue.shift());
+        }
     })
 
     Crafty.load(assetsObj, // preload assets
