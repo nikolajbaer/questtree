@@ -15,10 +15,10 @@ export class Quest{
     add_dependency(subquest){ this.depends.push(subquest) }
     add_requirement(requirement){ this.requires.push(requirement) }
 
-    is_complete(){
+    is_complete(character){
         var complete = true;
-        this.depends.forEach( dep => { complete &= dep.is_complete(); });
-        this.requires.forEach( rq => { complete &= rq.is_satisfied(this.character); });
+        this.depends.forEach( dep => { complete &= dep.is_complete(character); });
+        this.requires.forEach( rq => { complete &= rq.is_satisfied(character); });
         return complete;
     }
 
@@ -55,9 +55,9 @@ export class Quest{
 }
 
 export class BaseRequirement{
-    constructor(name,bound_object){
+    constructor(name,required){
         this.name = name;
-        this.bound_object = bound_object;
+        this.required = required;
     }
 
     is_satisfied(character){
@@ -67,7 +67,7 @@ export class BaseRequirement{
 
 export class InventoryRequirement extends BaseRequirement {
     is_satisfied(character){
-        return character.has_in_inventory(this.bound_object);
+        return character.inventory.filter( i => i == this.required).length > 0;
     }
 }
 
@@ -75,7 +75,14 @@ export class ActionRequirement extends BaseRequirement {
     constructor(name,bound_object,character){
         super(name,bound_object);
         this.action_complete = false;
-        // TODO listen somewhere for action?
+    }
+
+    is_satisfied(character){
+        return this.action_complete;
+    }
+
+    action_triggered(){
+        this.action_complete = true;
     }
 }
 
@@ -111,12 +118,12 @@ export function build_quest(){
         }
         if( obj.requires_items != undefined){
             obj.requires_items.forEach( rqi => {
-                q.add_requirement(new InventoryRequirement(rqi,null)); 
+                q.add_requirement(new InventoryRequirement(`Find ${rqi}`,rqi)); 
             })
         }
         if( obj.requires_actions != undefined){
             obj.requires_actions.forEach( rqa => {
-                q.add_requirement(new ActionRequirement(rqa,null));
+                q.add_requirement(new ActionRequirement(`Do ${rqa}`,rqa));
             })
         }
         return q;

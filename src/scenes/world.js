@@ -33,6 +33,6 @@ Crafty.scene("world", function(){
 
     console.log("Building Quest");
     const quest = build_quest();
-    console.log("Quest: ",quest.describe(player.name),quest);
-
+    console.log("Setting quest: ",quest.describe(player.name));
+    player.attr({quest:quest});
 });

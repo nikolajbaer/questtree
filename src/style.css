@@ -3,8 +3,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: #666666;
-    font-family: "Arial",sans-serif;
-    font-size: 14pt;
+    font-family: 'Press Start 2P', cursive;
 }
 #game {
     margin: 0px;
@@ -12,4 +11,65 @@ body {
     width: 100%;
     height: 100%;
     background-color: #43313d;
+}
+
+h1,h2.subtitle {
+    z-index: 1000;
+    font-size: 14pt;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+h1 {
+    top: 0px;
+}
+h2.subtitle {
+    top: 30px;
+}
+a {
+    color: white;
+}
+h3 {
+    font-size: 12pt;
+}
+#quest {
+    position: fixed;
+    left: 0px;
+    top: 200px;
+    padding: 4px;
+    width: 300px;
+    min-height: 50px;
+    color: #43313d;
+    background-color: rgba(201,196,182,0.5); 
+    z-index: 1000;
+}
+
+.popup {
+    line-height: 1.5em;
+    font-size: 12pt;
+    z-index: 10000;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    min-height: 50%;
+    padding: 15px 15px 40px 15px;
+    background-color: #ccc5b7; 
+    display: none;
+}
+
+button.close {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    text-align: center;
+    background-color: #43313d;
+    border: white;
+    display: inline-block;
+    padding: 15px 15px;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    font-size: 14pt;
+    cursor: pointer;
 }
