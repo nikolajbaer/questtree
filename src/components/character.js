@@ -16,8 +16,12 @@ Crafty.c('Character', {
                 const item = pickup.obj
                 Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
                 this.inventory.push(item.item);
+                Crafty.trigger("characterUpdate",this);
                 item.destroy();
-                this.quest.update(this);
+                const complete = this.quest.update(this);
+                if(complete){
+                    Crafty.trigger("showMessages", [`${this.quest.name} is complete!`]);
+                }
                 Crafty.trigger("questUpdate",this.quest);
             });
             console.log(this.inventory);
@@ -38,14 +42,5 @@ Crafty.c('Character', {
             this.speedx = {x:0,y:0}
         })
         */
-    },
-    checkQuest: function(){
-        if(this.quest != null){
-            const complete = this.quest.is_complete(this);
-            if(complete){
-                Crafty.trigger("showMessages", [`${this.quest.name} is complete!`]);
-            }
-            Crafty.trigger('questUpdate',this)
-        }
     },
 })

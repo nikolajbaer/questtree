@@ -22,6 +22,7 @@ export class Quest{
         this.depends.forEach( dep => { complete &= dep.update(character); });
         this.requires.forEach( rq => { complete &= rq.update(character); });
         this.complete = complete;
+        return complete;
     }
 
     describe(character_name){

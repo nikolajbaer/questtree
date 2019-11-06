@@ -5,6 +5,7 @@ import { assetsObj } from './assets'
 import * as _ from 'lodash'
 import { gen_music } from "./music"
 import * as quest_template from "./quest_display.ejs"
+import * as inventory_template from "./inventory_display.ejs"
 
 var popup_div = null;
 const popup_queue = [];
@@ -47,8 +48,11 @@ function main(){
     })
 
     Crafty.bind("questUpdate", quest => {
-        console.log(quest_template,quest);
         document.getElementById("quest_display").innerHTML = quest_template({quest:quest});
+    })
+
+    Crafty.bind("characterUpdate", character => {
+        document.getElementById("inventory_display").innerHTML = inventory_template({inventory:character.inventory});
     })
 
     Crafty.load(assetsObj, // preload assets
