@@ -59,6 +59,7 @@ function main(){
         function() {
             Crafty.enterScene("world");
             // disabled, requires https, and might sound terrrible! gen_music();
+            window.gen_music = gen_music; // in case you want to try it
         },
         function(e) { },
         function(e) { console.error(e)}
