@@ -10,9 +10,11 @@
   "license": "MIT",
   "dependencies": {
     "craftyjs": "^0.9.0",
+    "ejs-loader": "^0.3.5",
     "lodash": "^4.17.15",
     "perlin-noise": "0.0.1",
     "simplex-noise": "^2.4.0",
+    "webmidi": "^2.5.1",
     "webpack": "^4.41.2",
     "webpack-dev-server": "^3.9.0"
   },

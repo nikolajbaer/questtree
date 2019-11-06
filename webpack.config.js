@@ -35,6 +35,10 @@ module.exports = {
             loader: 'css-loader', // translates CSS into CommonJS modules
           }]
         },
+        {
+          test: /\.(ejs)$/,
+          loader: 'ejs-loader',
+        }
     ],
   },
   plugins: [
@@ -45,6 +49,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       Crafty: 'craftyjs/dist/crafty-min', // Crafty doesn't like to be built directly so we use provide instead
       // Recipe from https://github.com/ojread/craftyjs-webpack
+      _: "lodash",
     }),
   ],
   devServer: {

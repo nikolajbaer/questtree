@@ -17,11 +17,27 @@ Crafty.c('Character', {
                 Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
                 this.inventory.push(item.item);
                 item.destroy();
-                this.checkQuest();
+                this.quest.update(this);
+                Crafty.trigger("questUpdate",this.quest);
             });
             console.log(this.inventory);
         })
-
+        /*
+        // TODO Mouse/Touch Control
+        Crafty.s("Mouse").bind("MouseMove",function(e){
+            this.target = {x:e.realX,y:e.realY};
+        })
+        Crafty.s("Mouse").bind("MouseDown",function(e){
+            console.log(e)
+            const v1 = new Crafty.math.Vector2D(this.x,this.y);
+            const v2 = new Crafty.math.Vector2D(this.target.x,this.target.y);
+            const speed = v2.subtract(v1).normalize().multiply(this.speed);
+            this.speed = speed
+        })
+        Crafty.s("Mouse").bind("MouseUp",function(e){
+            this.speedx = {x:0,y:0}
+        })
+        */
     },
     checkQuest: function(){
         if(this.quest != null){
@@ -31,5 +47,5 @@ Crafty.c('Character', {
             }
             Crafty.trigger('questUpdate',this)
         }
-    }
+    },
 })

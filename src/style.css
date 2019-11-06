@@ -83,3 +83,10 @@ button.close {
     font-size: 14pt;
     cursor: pointer;
 }
+
+#quest_display .subquest {
+    margin-left: 1em;
+}
+#quest_display .requirement {
+    margin-left: 0.5em; 
+}

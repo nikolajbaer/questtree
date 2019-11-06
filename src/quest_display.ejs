@@ -1,0 +1,18 @@
+<% function walk(q){ %>
+    <div class="subquest">
+     <strong>Task: <% if(q.complete){ %>✅<% } %><%= q.name %></strong>
+     <i>Requires:</i>
+     <% q.requires.forEach( r => { %>
+        <div class="requirement">
+            <% if(r.satisfied){ %>✅<% }else{ %>🔍<% }%><%= r.required %>
+        </div>
+     <% })
+     if(q.depends.length){ %><i>and.. </i><% }
+    q.depends.forEach( subq => {
+        walk(subq)
+    })
+} 
+
+walk(quest);
+%>
+

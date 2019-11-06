@@ -4,22 +4,24 @@
 // - depends - subquests to fulfill
 // - requires - items to obtain for completing subquest
 // - actions - actions to complete for satisfying subquest
+// - triggers - trigger event when a subquest is complete
 // To play game, you solve dependency trees to achieve main quest
 export class Quest{
     constructor(name){
         this.name = name;
         this.requires = [];
         this.depends = [];
+        this.complete = false;
     }
 
     add_dependency(subquest){ this.depends.push(subquest) }
     add_requirement(requirement){ this.requires.push(requirement) }
 
-    is_complete(character){
+    update(character){
         var complete = true;
-        this.depends.forEach( dep => { complete &= dep.is_complete(character); });
-        this.requires.forEach( rq => { complete &= rq.is_satisfied(character); });
-        return complete;
+        this.depends.forEach( dep => { complete &= dep.update(character); });
+        this.requires.forEach( rq => { complete &= rq.update(character); });
+        this.complete = complete;
     }
 
     describe(character_name){
@@ -51,54 +53,36 @@ export class Quest{
         }
         return txt;
     }
-
 }
 
 export class BaseRequirement{
     constructor(name,required){
         this.name = name;
         this.required = required;
+        this.satisfied = false;
     }
 
-    is_satisfied(character){
-        return false;
+    update(character){
+        return this.satisfied;
     } 
 } 
 
 export class InventoryRequirement extends BaseRequirement {
-    is_satisfied(character){
-        return character.inventory.filter( i => i == this.required).length > 0;
+    update(character){
+        if( character.inventory.filter( i => i == this.required).length > 0 ){
+            this.satisfied = true;
+        }
+        return this.satisfied;
     }
 }
 
 export class ActionRequirement extends BaseRequirement {
-    constructor(name,bound_object,character){
-        super(name,bound_object);
-        this.action_complete = false;
-    }
-
-    is_satisfied(character){
-        return this.action_complete;
-    }
-
     action_triggered(){
-        this.action_complete = true;
+        this.satisfied = true;
     }
 }
 
-
-export function build_quest(){
-    const quest_tree = {
-        "_main":"find-fleece",
-        "find-fleece":{
-            "depends":["find-sword"],
-            "requires_items":["fleece"],
-        },
-        "find-sword":{
-            "requires_items":["sword","shield"],
-        },
-    }
-
+export function build_quest(quest_tree){
     function assemble_quest(obj,name){
         console.log("assembling",name,obj);
         const q = new Quest(name);

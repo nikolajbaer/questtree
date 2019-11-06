@@ -3,6 +3,8 @@ import './components'
 import './scenes'
 import { assetsObj } from './assets'
 import * as _ from 'lodash'
+import { gen_music } from "./music"
+import * as quest_template from "./quest_display.ejs"
 
 var popup_div = null;
 const popup_queue = [];
@@ -12,7 +14,6 @@ function show_popup(html){
     popup_div.children[0].innerHTML = html;
     popup_div.style.display = "block";
 }
-window.popup_queue = popup_queue;
 
 function main(){
 
@@ -45,9 +46,15 @@ function main(){
         }
     })
 
+    Crafty.bind("questUpdate", quest => {
+        console.log(quest_template,quest);
+        document.getElementById("quest_display").innerHTML = quest_template({quest:quest});
+    })
+
     Crafty.load(assetsObj, // preload assets
         function() {
             Crafty.enterScene("world");
+            // disabled, requires https, and might sound terrrible! gen_music();
         },
         function(e) { },
         function(e) { console.error(e)}

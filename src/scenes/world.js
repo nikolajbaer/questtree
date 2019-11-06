@@ -1,5 +1,7 @@
 import perlin from 'perlin-noise';
 import { build_quest } from "../quest.js";
+import { generate_quest } from "../questgen";
+import { items,npcs } from "../assets";
 
 const TILESZ = {x:32,y:32};
 
@@ -28,23 +30,42 @@ Crafty.scene("world", function(){
             Crafty.e('Grass').attr(pos);
         }else if(v > 0.5){
             Crafty.e('Dirt').attr(pos);
-        }else if(v < 0.05){
+        }else if(v < 0.02){
             Crafty.e('EnvObj, bones').attr(pos);
         }
     }
     
-    ['fleece','sword','shield'].forEach( f => {
-        Crafty.e(`Pickup, ${f}`).attr({ 
-            x:Math.random()*Crafty.viewport.width, 
-            y:Math.random()*Crafty.viewport.height,
-            item: f
-        });
-    })
     const player = Crafty.e('Character').attr({x:400,y:400,z:1000,name:"Wilbur"});
 
     console.log("Building Quest");
-    const quest = build_quest();
+
+    const quest_tree = generate_quest(items,npcs);
+    const quest = build_quest(quest_tree);
+    Crafty.trigger("questUpdate",quest);
+    generate_quest_items(quest);
+
     console.log("Setting quest: ",quest.describe(player.name));
     player.attr({quest:quest});
 
 });
+
+
+// Assumptions:
+// Each item is unique in quest-tree
+// and each item is unique in the world
+// TODO accommodate for multiple items
+function generate_quest_items(quest){
+    function walk_quest(q){
+        q.requires.forEach( f => {
+            console.log("adding ",f.required)
+            Crafty.e(`Pickup, ${f.required}`).attr({ 
+                // For now we randomly place items for quest
+                x:Math.random()*Crafty.viewport.width, 
+                y:Math.random()*Crafty.viewport.height,
+                item: f.required
+            });
+        })
+        q.depends.forEach( subq => { walk_quest(subq); });
+    }
+    walk_quest(quest);
+}
