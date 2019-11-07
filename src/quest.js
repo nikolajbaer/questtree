@@ -69,6 +69,10 @@ export class BaseRequirement{
 } 
 
 export class InventoryRequirement extends BaseRequirement {
+    constructor(name,required){
+        super(name,required);
+        this.type = "inventory";
+    }
     update(character){
         if( character.inventory.filter( i => i == this.required).length > 0 ){
             this.satisfied = true;
@@ -78,6 +82,11 @@ export class InventoryRequirement extends BaseRequirement {
 }
 
 export class ActionRequirement extends BaseRequirement {
+    constructor(name,required,npc){
+        super(name,required);
+        this.npc = npc;
+        this.type = "action";
+    }
     action_triggered(){
         this.satisfied = true;
     }

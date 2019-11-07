@@ -57,13 +57,24 @@ Crafty.scene("world", function(){
 function generate_quest_items(quest){
     function walk_quest(q){
         q.requires.forEach( f => {
-            console.log("adding ",f.required)
-            Crafty.e(`Pickup, ${f.required}`).attr({ 
-                // For now we randomly place items for quest
-                x:Math.random()*Crafty.viewport.width, 
-                y:Math.random()*Crafty.viewport.height,
-                item: f.required
-            });
+            console.log("requires",typeof(f));
+            if(f.type == "inventory"){
+                console.log("adding ",f.required)
+                Crafty.e(`Pickup, ${f.required}`).attr({ 
+                    // For now we randomly place items for quest
+                    x:Math.random()*Crafty.viewport.width, 
+                    y:Math.random()*Crafty.viewport.height,
+                    item: f.required
+                });
+            }else if(f.type == "action"){
+                console.log(`Adding ${f.npc}`)
+                Crafty.e(`NPC, ${f.npc}`).attr({
+                    // For now we randomly place items for quest
+                    x:Math.random()*Crafty.viewport.width, 
+                    y:Math.random()*Crafty.viewport.height,
+                    name: f.npc
+                })
+            }
         })
         q.depends.forEach( subq => { walk_quest(subq); });
     }

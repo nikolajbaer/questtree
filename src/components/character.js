@@ -14,7 +14,7 @@ Crafty.c('Character', {
         this.onHit("Pickup",function(hitData){
             hitData.forEach( pickup => {
                 const item = pickup.obj
-                Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
+                //Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
                 this.inventory.push(item.item);
                 Crafty.trigger("characterUpdate",this);
                 item.destroy();
@@ -24,7 +24,23 @@ Crafty.c('Character', {
                 }
                 Crafty.trigger("questUpdate",this.quest);
             });
-            console.log(this.inventory);
+        })
+        this.onHit("NPC",function(hitData){
+            hitData.forEach( npc_hit => {
+                const npc = npc_hit.obj
+                //Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
+                const action = npc.interact(this);
+                if(action != null){
+                    console.log(`triggering ${action}`)
+                    Crafty.trigger(action,npc);
+                    npc.destroy();
+                }
+                const complete = this.quest.update(this);
+                if(complete){
+                    Crafty.trigger("showMessages", [`${this.quest.name} is complete!`]);
+                }
+                Crafty.trigger("questUpdate",this.quest);
+            });
         })
         /*
         // TODO Mouse/Touch Control
