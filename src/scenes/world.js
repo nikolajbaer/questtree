@@ -39,8 +39,8 @@ Crafty.scene("world", function(){
 
     console.log("Building Quest");
 
-    const quest_tree = generate_quest(items,npcs);
-    const quest = build_quest(quest_tree);
+    const quest = generate_quest(items,npcs);
+    console.log(quest);
     Crafty.trigger("questUpdate",quest);
     generate_quest_items(quest);
 

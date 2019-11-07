@@ -83,27 +83,3 @@ export class ActionRequirement extends BaseRequirement {
     }
 }
 
-export function build_quest(quest_tree){
-    function assemble_quest(obj,name){
-        console.log("assembling",name,obj);
-        const q = new Quest(name);
-        if( obj.depends != undefined ){
-            obj.depends.forEach( subq => {
-                q.add_dependency(assemble_quest(quest_tree[subq],subq));
-            });
-        }
-        if( obj.requires_items != undefined){
-            obj.requires_items.forEach( rqi => {
-                q.add_requirement(new InventoryRequirement(`Find ${rqi}`,rqi)); 
-            })
-        }
-        if( obj.requires_actions != undefined){
-            obj.requires_actions.forEach( rqa => {
-                q.add_requirement(new ActionRequirement(`Do ${rqa}`,rqa));
-            })
-        }
-        return q;
-    }
-    
-    return assemble_quest(quest_tree[quest_tree._main],quest_tree._main);
-}
