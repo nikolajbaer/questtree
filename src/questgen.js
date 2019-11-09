@@ -45,7 +45,7 @@ export function generate_quest(items,npcs){
 
 
         // Add SubQuests?
-        if( d > 0 && (items_to_use.length > 0 || actions_to_use.length > 0)){
+        if( d > 0 && (items_to_use.length > 0 || npcs_to_use.length > 0)){
             if(Math.random() > 0.75){  
                 q.add_dependency(build_quest(new Quest("subquest"),d-1));
             }

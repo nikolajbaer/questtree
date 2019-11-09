@@ -1,30 +1,26 @@
-import WebMidi from "webmidi";
+import Tone from "tone";
 
 export function gen_music(){
-    WebMidi.enable(function (err) {
-        if (err) {
-          console.log("WebMidi could not be enabled.", err);
-        } else {
-          console.log("WebMidi enabled!");
-        }
-    });
-    console.log(WebMidi.outputs);
-    const output = WebMidi.outputs[0];
+  var synth = new Tone.Synth().toMaster()
 
-    if(output){
-        const BPM = 120;
-        const beat_ms = ((60/BPM) * 1000);
-        const measure = 4;
+  //pass in an array of events
+  var part = new Tone.Part(function(time, event){
+	  //the events will be given to the callback with the time they occur
+	  synth.triggerAttackRelease(event.note, event.dur, time)
+  }, [{ time : 0, note : 'C4', dur : '4n'},
+	    { time : {'4n' : 1, '8n' : 1}, note : 'E4', dur : '8n'},
+	    { time : '2n', note : 'G4', dur : '16n'},
+	    { time : {'2n' : 1, '8t' : 1}, note : 'C5', dur : '4n'}])
 
-        // TODO play arpeggios and walk the circle of fifths? not sure
-        function playMeasure(){
-            output.playNote("C3",1)
-                  .playNote("E3",1, {time:WebMidi.time+beat_ms})
-                  .playNote("G3",1, {time:WebMidi.time+beat_ms*2})
-                  .playNote("E3",1, {time:WebMidi.time+beat_ms*3})
-        }
+  //start the part at the beginning of the Transport's timeline
+  part.start(0)
 
-        playMeasure();
-        setInterval( playMeasure, beat_ms * measure );
-    }
+  //loop the part 3 times
+  part.loop = 3
+  part.loopEnd = '1m'
+
+  Tone.Transport.toggle();
+  //start/stop the transport
+  //document.querySelector('tone-play-toggle').addEventListener('change', e => Tone.Transport.toggle())
+ 
 }

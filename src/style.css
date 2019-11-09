@@ -39,34 +39,56 @@ h3 {
     color: #43313d;
     background-color: rgba(201,196,182,0.9); 
     z-index: 1000;
+    min-width: 10px;
+    padding: 10px;
+    min-height: 100px;
+    transition: width .2s;
 }
-.overlay h3 { text-align: center; }
+.overlay:hover {
+    width: 300px;
+}
+.overlay h3 { text-align: center; display: none; }
+.overlay .icon { display: block; font-size: 24pt; }
+.overlay:hover h3 { display: block; }
+.overlay:hover .icon { display: none }
 #quest {
     left: 0px;
     top: 200px;
-    width: 300px;
     min-height: 50px;
+}
+#quest_display {
+    display: none;
+}
+.overlay:hover #quest_display { 
+    display:block;
 }
 
 #inventory {
     right: 0px;
     top: 200px;
-    width: 300px;
     min-height: 50px;
 }
+#inventory_display{
+    display: none;
+}
+.overlay:hover #inventory_display { 
+    display:block;
+}
+
 
 .popup {
     line-height: 1.5em;
     font-size: 12pt;
     z-index: 10000;
     position: absolute;
-    top: 25%;
-    left: 25%;
-    width: 50%;
+    top: 50px;
+    left: 10%;
+    width: 80%;
     min-height: 50%;
     padding: 15px 15px 40px 15px;
     background-color: #ccc5b7; 
     display: none;
+    font-size: 10pt;
 }
 
 button.close {
@@ -89,4 +111,13 @@ button.close {
 }
 #quest_display .requirement {
     margin-left: 0.5em; 
+}
+
+#footer-note {
+    position: fixed;
+    z-index: 1000;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: white;
 }

@@ -10,10 +10,12 @@
     <h2 class="subtitle">by <a href="https://nikolaj.itch.io/">Nikolaj Baer</a></h2>
     <div id="game"></div>
     <div class="overlay" id="quest">
+        <div class="icon">⚔</div>
         <h3>Your Quest</h3>
         <div id="quest_display"></div>
     </div>
     <div class="overlay" id="inventory">
+        <div class="icon">🎒</div>
         <h3>Your Stuff</h3>
         <div id="inventory_display">
             nothing yet! 
@@ -25,24 +27,16 @@
         <button class="close">Close</button>
     </div>
 
+    <div id="footer-note">
+        use arrow keys to move
+    </div>
+
     <script type="text/html" id="intro">
         <p>Hi There!</p>
         <p>This is a <a href="https://itch.io/jam/procjam">2019 ProcJam</a> project where I am trying to
-        dynamically generate a "Quest" for an RPG-like game, using a dependency tree as my model. I don't 
-        think this is particularily new territory, but here are my rough goals.</p>
-        <h3>Core Goals</h3>
-        <ul>
-            <li>Create a dynamic quest with multiple sub-quests buit out of actions and pickups</li>
-            <li>Create a top-level narrative summary that makes sense</li>
-        </ul>
-        <h3>Stretch Goals</h3>
-        <ul>
-            <li>Create multiple resolutions to quests, so there are multiple ways to solve it</li>
-            <li>Create some sort of storyline that fits, and possibly intertwines with the quest</li>
-            <li>Make it fun</li>
-        </ul>
+        dynamically generate a "Quest" for an RPG-like game, using a dependency tree as my model.</p>
+
         <p>
-            Hopefully I get some of this done!,<br>
             - <a href="https://www.nikolajbaer.us">Nikolaj</a>
         </p>
         <p>

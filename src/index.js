@@ -58,8 +58,7 @@ function main(){
     Crafty.load(assetsObj, // preload assets
         function() {
             Crafty.enterScene("world");
-            // disabled, requires https, and might sound terrrible! gen_music();
-            window.gen_music = gen_music; // in case you want to try it
+            //gen_music();  must be triggered after start 
         },
         function(e) { },
         function(e) { console.error(e)}
