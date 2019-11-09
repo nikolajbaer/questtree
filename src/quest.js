@@ -28,13 +28,13 @@ export class Quest{
     describe(character_name){
         var txt = `${character_name} must ${this.name}. `;
         if(this.requires.length){
-            txt += `To do this, ${character_name} must gather`;
+            txt += `To do this, ${character_name} must `;
             for(var i=0;i<this.requires.length;i++){
                 if(this.requires.length == 1){
-                    txt += ` a ${this.requires[i].name}`
+                    txt += ` ${this.requires[i].name.toLowerCase()}`
                 }else if( i < this.requires.length-1 ){
-                    txt += ` a ${this.requires[i].name}, `
-                }else{ txt += ` and a ${this.requires[i].name}`}
+                    txt += ` ${this.requires[i].name.toLowerCase()}, `
+                }else{ txt += ` and ${this.requires[i].name.toLowerCase()}`}
             } 
             txt += '. ';
         }
@@ -42,10 +42,10 @@ export class Quest{
             txt += `To do this, ${character_name} must`
             for(var i=0;i<this.depends.length;i++){
                 if(this.depends.length == 1){
-                    txt += ` ${this.depends[i].name}`
+                    txt += ` ${this.depends[i].name.toLowerCase()}`
                 }else if( i < this.depends.length-1 ){
-                    txt += ` ${this.depends[i].name}, `
-                }else{ txt += `and ${this.depends[i].name}`}
+                    txt += ` ${this.depends[i].name.toLowerCase()}, `
+                }else{ txt += `and ${this.depends[i].name.toLowerCase()}`}
             } 
             txt += '.';
             this.depends.forEach( subq => {

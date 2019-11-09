@@ -28,13 +28,13 @@ export function generate_quest(items,npcs){
         if(inv_rqs){
             for(var i=0;i<inv_rqs && items_to_use.length > 0;i++){
                 const inv = items_to_use.pop()
-                q.add_requirement(new InventoryRequirement(`Find ${inv}`,inv)); 
+                q.add_requirement(new InventoryRequirement(`Find a ${inv}`,inv)); 
             }
         }
         if(act_rqs){
             for(var i=0; i<act_rqs && npcs_to_use.length > 0; i++){
                 const npc = npcs_to_use.pop();
-                const action_rq = new ActionRequirement(`Defeat ${npc}`,`defeat-${npc}`,npc)
+                const action_rq = new ActionRequirement(`Defeat the ${npc}`,`defeat-${npc}`,npc)
                 q.add_requirement( action_rq ); 
                 Crafty.bind(`defeat-${npc}`, e => { 
                     console.log(`Action defeat-${npc} triggered`)
