@@ -44,8 +44,8 @@ Crafty.scene("world", function(){
     Crafty.trigger("questUpdate",quest);
     generate_quest_items(quest);
 
-    console.log("Setting quest: ",quest.describe(player.name));
     player.attr({quest:quest});
+    Crafty.trigger("showMessages", [`Your name is ${player.name}.<br><br>${quest.describe(player.name)}`]);
 
 });
 

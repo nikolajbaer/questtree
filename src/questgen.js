@@ -14,7 +14,7 @@ const quest_tree = {
 
 export function generate_quest(items,npcs){
 
-    const base_quest = new Quest("Base Quest");
+    const base_quest = new Quest("Quest");
 
     const items_to_use = _.shuffle(_.clone(_.keys(items)));
     const npcs_to_use = _.shuffle(_.clone(_.keys(npcs)));
