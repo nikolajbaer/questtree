@@ -78,7 +78,7 @@ h3 {
 
 .popup {
     line-height: 1.5em;
-    font-size: 12pt;
+    font-size: 8pt;
     z-index: 10000;
     position: absolute;
     top: 50px;
@@ -88,7 +88,6 @@ h3 {
     padding: 15px 15px 40px 15px;
     background-color: #ccc5b7; 
     display: none;
-    font-size: 10pt;
 }
 
 button.close {
@@ -120,4 +119,5 @@ button.close {
     width: 100%;
     text-align: center;
     color: white;
+    font-size: 8pt;
 }
