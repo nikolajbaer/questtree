@@ -32,6 +32,10 @@ function main(){
         }
     })
 
+    document.getElementById("new_quest").addEventListener("click", e => {
+        Crafty.enterScene("world")
+    })
+
     if(window.localStorage != undefined && window.localStorage.getItem("questtree-intro") == null){
         show_popup(document.getElementById("intro").innerHTML); // show intro popup
         window.localStorage.setItem("questtree-intro","shown");

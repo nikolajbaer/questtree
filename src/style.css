@@ -89,20 +89,25 @@ h3 {
     background-color: #ccc5b7; 
     display: none;
 }
+button {
+    background-color: #43313d;
+    border: 1px solid white;
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
 
 button.close {
     position: absolute;
     bottom: 8px;
     right: 8px;
-    text-align: center;
-    background-color: #43313d;
-    border: white;
-    display: inline-block;
     padding: 15px 15px;
     font-family: 'Press Start 2P', cursive;
-    color: white;
     font-size: 14pt;
-    cursor: pointer;
+}
+#new_quest {
+    padding: 4px;
 }
 
 #quest_display .subquest {
