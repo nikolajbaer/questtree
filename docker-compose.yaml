@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    build: ./
+    command: npm run start
+    ports:
+      - 8080:8080
+    working_dir: /code/
+#    volumes:
+#      - ./:/code/
+# switch to entire local folder to do dev
+# but you need to npm build on your local folder, not docker container
+#      - ./:/code/:cached

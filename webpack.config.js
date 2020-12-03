@@ -6,7 +6,9 @@ module.exports = {
   entry: './src/index.js', 
   mode: 'development',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    port: 8080,
+    host: '0.0.0.0' // needed to run in the docker container
   },
   output: { 
     path: path.resolve(__dirname,'dist'), 
