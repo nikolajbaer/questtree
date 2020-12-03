@@ -1,7 +1,7 @@
 # questtree
 Quest Dependency Tree builder / procgen RPG
 
-Originally done as a ProcJam 2019 Entry, and hopefully will get some iteration for [ProcJam 2020](https://itch.io/jam/procjam)
+Originally done as a [ProcJam 2019 Entry](https://itch.io/jam/procjam2019/rate/511551), and hopefully will get some iteration for [ProcJam 2020](https://itch.io/jam/procjam)
 
 ### Idea/Goal ###
 Programmatically generate quests in the form of a dependency tree, with subquests, etc. 
