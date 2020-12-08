@@ -1,0 +1,17 @@
+<h3>Sprite Map Coordinate Finder</h3>
+<div style="background-color: black; text-align: center;">
+    <img src="<%= src %>" usemap="#spritedebug" >
+    <map name="spritedebug">
+        <% 
+        for(var i=0; i < w; i++ ){ 
+            for(var j=0; j < h; j++ ){
+                const x = i * tsz;
+                const y = j * tsz;
+                const x1 = (i+1) * tsz
+                const y1 = (j+1) * tsz
+        %>
+        <area shape="rect" coords="<%= x %>,<%= y %>,<%= x1 %>,<%= y1 %>" alt="<%= i %>,<%= j %>" href="javascript:alert('<%= i%>,<%= j %>')">
+        <% }
+        } %>
+    </map>
+</div>

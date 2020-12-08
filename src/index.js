@@ -7,9 +7,14 @@ import { gen_music } from "./music"
 import * as quest_template from "./quest_display.ejs"
 import * as inventory_template from "./inventory_display.ejs"
 
+// Debug
+import * as sprite_debug_template from "./sprite_debug.ejs"
+import spritesheet from './colored_transparent.png';
+
 var popup_div = null;
 const popup_queue = [];
 var popup_displayed = false;
+var music = null
 
 function show_popup(html){
     popup_displayed = true;
@@ -18,7 +23,7 @@ function show_popup(html){
 }
 
 function ack_popup(){
-    if(popup_queue.length > 0){
+   if(popup_queue.length > 0){
         show_popup(popup_queue.shift());
     }else{
         popup_div.style.display = "none";
@@ -41,10 +46,24 @@ function main(){
         Crafty.enterScene("world")
     })
 
+    var music_on = false
+    document.getElementById("mute").addEventListener("click", e => {
+        if( music == null){
+            music = gen_music()
+            e.target.innerHTML= "music off"
+        }else{
+            music.toggle()
+            e.target.innerHTML= "music "  + ((music.state == "started")?"off":"on")
+        }
+    })
+
+
+    /*
     if(window.localStorage != undefined && window.localStorage.getItem("questtree-intro") == null){
         show_popup(document.getElementById("intro").innerHTML); // show intro popup
         window.localStorage.setItem("questtree-intro","shown");
-    }
+    }*/
+    show_popup(document.getElementById("intro").innerHTML); // show intro popup
 
     Crafty.init(window.innerWidth,window.innerHeight, document.getElementById('game'))
 
@@ -73,7 +92,6 @@ function main(){
     Crafty.load(assetsObj, // preload assets
         function() {
             Crafty.enterScene("world");
-            //gen_music();  must be triggered after start 
         },
         function(e) { },
         function(e) { console.error(e)}
@@ -82,3 +100,15 @@ function main(){
 }
 
 main();
+
+
+window.show_sprite_debug = function(){
+    show_popup(
+        sprite_debug_template({
+            src: spritesheet,
+            tsz: 17,
+            w: 64,
+            h: 32
+        })
+    )
+}

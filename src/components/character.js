@@ -7,10 +7,22 @@ Crafty.c('Character', {
         this.inventory = [];
         this.name = "Unnamed";
         this.quest = null;
-        this.checkHits("Pickup, StaticBody")
-        this.onHit("StaticBody", h => {
-            //console.log("stop")
-        })
+        this.checkHits("Pickup, StaticBody, Wall, bones")
+        this.bind('Move', function(evt) { // after player moved
+            var hitDatas, hitData;
+            if ((hitDatas = this.hit('Wall'))) { // check for collision with walls
+              hitData = hitDatas[0]; // resolving collision for just one collider
+              if (hitData.type === 'SAT') { // SAT, advanced collision resolution
+                // move player back by amount of overlap
+                this.x -= hitData.overlap * hitData.nx;
+                this.y -= hitData.overlap * hitData.ny;
+              } else { // MBR, simple collision resolution
+                // move player to previous position
+                this.x = evt._x;
+                this.y = evt._y;
+              }
+            }
+        });
         this.onHit("Pickup",function(hitData){
             hitData.forEach( pickup => {
                 const item = pickup.obj
@@ -42,21 +54,13 @@ Crafty.c('Character', {
                 Crafty.trigger("questUpdate",this.quest);
             });
         })
-        /*
-        // TODO Mouse/Touch Control
-        Crafty.s("Mouse").bind("MouseMove",function(e){
-            this.target = {x:e.realX,y:e.realY};
+        this.onHit("bones",function(hitData){
+            const bones = hitData[0].obj
+            console.log(bones,bones.touched)
+            if( !bones.touched ){                    
+                bones.touched = true
+                Crafty.trigger("showMessages", [`Nothing but some old bones here.`])
+            }
         })
-        Crafty.s("Mouse").bind("MouseDown",function(e){
-            console.log(e)
-            const v1 = new Crafty.math.Vector2D(this.x,this.y);
-            const v2 = new Crafty.math.Vector2D(this.target.x,this.target.y);
-            const speed = v2.subtract(v1).normalize().multiply(this.speed);
-            this.speed = speed
-        })
-        Crafty.s("Mouse").bind("MouseUp",function(e){
-            this.speedx = {x:0,y:0}
-        })
-        */
     },
 })

@@ -2,10 +2,19 @@ import spritesheet from './colored_transparent.png';
 
 
 export const items = {
-    "fleece": {sprite:[16,22]},
-    "sword": {sprite:[0,31]}, 
-    "shield": {sprite:[6,25]},
-    "potion": {sprite:[30,16]},
+    "yellow_key": {sprite:[32,11]},
+    "blue_key": {sprite:[33,11]},
+    "red_key": {sprite:[34,11]},
+    "sword": {sprite:[33,8]}, 
+    "shield": {sprite:[37,3]},
+    "potion": {sprite:[32,13]},
+    "boat": {sprite:[11,19]},
+    "crossbow": {sprite:[37,5]},
+    "shovel": {sprite:[42,5]},
+    "crown": {sprite:[43,2]},
+    "gauntlets":{sprite:[41,0]},
+    "helm":{sprite:[34,0]},
+    "scroll":{sprite:[33,15]}
 }
 export const npcs = {
     "ogre": {sprite:[24,3]}, 

@@ -4,15 +4,18 @@ import { generate_quest } from "../questgen";
 import { items,npcs } from "../assets";
 
 const TILESZ = {x:32,y:32};
+const margin = 0.1
 
 Crafty.scene("world", function(){
     // Generate trees
     console.log("generating environment")
 
-    const width = Crafty.viewport.width;
-    const height = Crafty.viewport.height;
+    const width = Crafty.viewport.width * (1-margin*2);
+    const height = Crafty.viewport.height * (1-margin*2);
     const twidth = Math.ceil(width/TILESZ.x);
     const theight = Math.ceil(height/TILESZ.y);
+    const left = Crafty.viewport.width * margin 
+    const top = Crafty.viewport.height * margin
   
     // Use Perlin noise to make the world interesting
     // TODO just render this to a base layer canvas rather than creating entities
@@ -23,7 +26,10 @@ Crafty.scene("world", function(){
         const tx = i%twidth;
         const ty = Math.floor(i/twidth);
         const v = noise[i];
-        const pos = {x:tx*TILESZ.x,y:ty*TILESZ.y}
+        const pos = {
+            x: tx * TILESZ.x + left,
+            y: ty * TILESZ.y + top
+        }
         if( v > 0.75){
             Crafty.e('Tree').attr(pos);
         }else if(v > 0.6){
@@ -31,11 +37,27 @@ Crafty.scene("world", function(){
         }else if(v > 0.5){
             Crafty.e('Dirt').attr(pos);
         }else if(v < 0.02){
-            Crafty.e('EnvObj, bones').attr(pos);
+            Crafty.e('EnvObj, bones').attr(pos).attr({touched:false});
         }
     }
     
     const player = Crafty.e('Character').attr({x:400,y:400,z:1000,name:"Wilbur"});
+
+
+    const west = Crafty.e('2D, Collision, Wall').attr({
+        x:left-5,y:top,w:5,h:height,name:"west"
+    })
+    const east = Crafty.e('2D, Collision, Wall').attr({
+        x:width + left,y:top,w:5,h:height,name:"east"
+    })
+    const north = Crafty.e('2D, Collision, Wall').attr({
+        x:left,y:top-5,w:width,h:5,name:"north"
+    })
+    const south = Crafty.e('2D, Collision, Wall').attr({
+        x:left,y:height + top,w:width,h:5,name:"south"
+    })
+
+
 
     console.log("Building Quest");
 
@@ -62,16 +84,16 @@ function generate_quest_items(quest){
                 console.log("adding ",f.required)
                 Crafty.e(`Pickup, ${f.required}`).attr({ 
                     // For now we randomly place items for quest
-                    x:Math.random()*Crafty.viewport.width, 
-                    y:Math.random()*Crafty.viewport.height,
+                    x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2) , 
+                    y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
                     item: f.required
                 });
             }else if(f.type == "action"){
                 console.log(`Adding ${f.npc}`)
                 Crafty.e(`NPC, ${f.npc}`).attr({
                     // For now we randomly place items for quest
-                    x:Math.random()*Crafty.viewport.width, 
-                    y:Math.random()*Crafty.viewport.height,
+                    x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2), 
+                    y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
                     name: f.npc
                 })
             }
