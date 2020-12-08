@@ -12,6 +12,14 @@ export const npcs = {
     "ghost": {sprite:[26,6]}, 
     "demon": {sprite:[27,2]},
     "wizard": {sprite:[24,1]},
+    "warlock": {sprite:[31,1]},
+    "spider": {sprite:[28,5]},
+    "kraken": {sprite:[25,8]},
+    "bat": {sprite:[26,8]},
+    "dwarf":{sprite:[26,9]},
+    "troll":{sprite:[25,9]},
+    "dragon":{sprite:[29,8]},
+    "rat":{sprite:[31,8]},
 }
 
 // Using kenney.nl 1bit

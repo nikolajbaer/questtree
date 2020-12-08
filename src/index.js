@@ -10,10 +10,23 @@ import * as inventory_template from "./inventory_display.ejs"
 var popup_div = null;
 const popup_queue = [];
 var popup_displayed = false;
+
 function show_popup(html){
     popup_displayed = true;
     popup_div.children[0].innerHTML = html;
     popup_div.style.display = "block";
+}
+
+function ack_popup(){
+    if(popup_queue.length > 0){
+        show_popup(popup_queue.shift());
+    }else{
+        popup_div.style.display = "none";
+        popup_displayed = false;
+        if(Crafty.isPaused()){
+            Crafty.pause();
+        }
+    }
 }
 
 function main(){
@@ -21,15 +34,7 @@ function main(){
     // Wire up our popup
     popup_div = document.querySelectorAll(".popup")[0];
     document.querySelectorAll(".popup .close")[0].addEventListener("click", e => {
-        if(popup_queue.length > 0){
-            show_popup(popup_queue.shift());
-        }else{
-            popup_div.style.display = "none";
-            popup_displayed = false;
-            if(Crafty.isPaused()){
-                Crafty.pause();
-            }
-        }
+        ack_popup();
     })
 
     document.getElementById("new_quest").addEventListener("click", e => {
@@ -48,6 +53,12 @@ function main(){
         messages.forEach( msg => { popup_queue.push(msg) })
         if(!popup_displayed){
             show_popup(popup_queue.shift());
+        }
+    })
+
+    Crafty.bind("KeyUp", e => { 
+        if(e.key == Crafty.keys.ENTER){
+            ack_popup() 
         }
     })
 
