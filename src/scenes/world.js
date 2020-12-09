@@ -37,7 +37,9 @@ Crafty.scene("world", function(){
         }else if(v > 0.5){
             Crafty.e('Dirt').attr(pos);
         }else if(v < 0.02){
-            Crafty.e('EnvObj, bones').attr(pos).attr({touched:false});
+            Crafty.e('EnvObj, Mouse').attr(pos).attr({touched:false}).bind('MouseUp', e=> {
+                Crafty.trigger("showMessages", [`Just some bones.`]);
+            });
         }
     }
     

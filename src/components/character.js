@@ -1,7 +1,7 @@
 
 Crafty.c('Character', {
     init: function(){
-        this.addComponent("2D, Canvas, character, Fourway, Collision");
+        this.addComponent("2D, Canvas, character, Fourway, Collision, Mouse");
         this.attr({w:32,h:32,z:1000})
         this.fourway(200, {normalize: true}) 
         this.inventory = [];
@@ -23,6 +23,11 @@ Crafty.c('Character', {
               }
             }
         });
+        this.bind('MouseUp', e => {
+            Crafty.trigger("showMessages",
+                [`${this.name}, you handsome devil!`]
+            )
+        })
         this.onHit("Pickup",function(hitData){
             hitData.forEach( pickup => {
                 const item = pickup.obj
