@@ -26,9 +26,11 @@ export class Quest{
     }
 
     describe(character_name){
-        var txt = `${character_name} must ${this.name}. `;
+        var txt = ''; //`${character_name} must ${this.name}. `;
         if(this.requires.length){
-            txt += `To do this, ${character_name} must `;
+            //txt += `To do this, ${character_name} must `;
+            txt += `${character_name} must `;
+
             for(var i=0;i<this.requires.length;i++){
                 if(this.requires.length == 1){
                     txt += ` ${this.requires[i].name.toLowerCase()}`
@@ -38,6 +40,7 @@ export class Quest{
             } 
             txt += '. ';
         }
+        /* Let's not show subtasks, they need to be discovered
         if(this.depends.length){
             txt += `To do this, ${character_name} must`
             for(var i=0;i<this.depends.length;i++){
@@ -52,6 +55,7 @@ export class Quest{
                 txt += subq.describe(character_name);
             })
         }
+        */
         return txt;
     }
 }

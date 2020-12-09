@@ -1,16 +1,5 @@
-import { npcs, items } from "./assets";
+import { npcs, items } from "../assets";
 import { InventoryRequirement,ActionRequirement,Quest } from "./quest";
-
-const quest_tree = {
-    "_main":"find-fleece",
-    "find-fleece":{
-        "depends":["find-sword"],
-        "requires_items":["fleece"],
-    },
-    "find-sword":{
-        "requires_items":["sword","shield"],
-    },
-}
 
 export function generate_quest(items,npcs){
 

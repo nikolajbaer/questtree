@@ -44,7 +44,8 @@ assetsObj.sprites[spritesheet] = {
         // Environmental bits
         "dirt1": [1,0],"dirt2": [2,0],"dirt3":[3,0],
         "grass1": [5,0],"grass2": [6,0],"grass3": [7,0],
-        "tree1": [0,1],"tree2": [1,1],"tree3": [2,1],"tree4": [3,1],
+        "tree1": [0,1],"tree2": [1,1],"tree3": [2,1],"tree4": [3,1],"tree5":[4,1],
+        "rocks":[5,2],
         "bones": [0,15],
     }
 }

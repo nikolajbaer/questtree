@@ -29,12 +29,15 @@ Crafty.c('Character', {
             )
         })
         this.onHit("Pickup",function(hitData){
-            hitData.forEach( pickup => {
-                const item = pickup.obj
-                //Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);
-                this.inventory.push(item.item);
-                Crafty.trigger("characterUpdate",this);
-                item.destroy();
+            hitData.forEach( pickup_hit => {
+                const pickup = pickup_hit.obj
+                const item = pickup.interact(this) 
+
+                if( item != null){
+                    this.inventory.push(item);
+                    Crafty.trigger("characterUpdate",this);
+                    pickup.destroy();
+                }
                 const complete = this.quest.update(this);
                 if(complete){
                     Crafty.trigger("showMessages", [`${this.quest.name} is complete!`]);

@@ -1,6 +1,6 @@
 import perlin from 'perlin-noise';
-import { build_quest } from "../quest.js";
-import { generate_quest } from "../questgen";
+import { build_quest } from "../quests/quest.js";
+import { generate_quest } from "../quests/questgen";
 import { items,npcs } from "../assets";
 
 const TILESZ = {x:32,y:32};
@@ -21,7 +21,7 @@ Crafty.scene("world", function(){
     // TODO just render this to a base layer canvas rather than creating entities
     const noise_opt = {octabeCount:4,amplitude:0.2,persistence:0.2};
     const noise = perlin.generatePerlinNoise(twidth,theight,noise_opt);
-    console.log(noise);
+    //console.log(noise);
     for(var i=0; i < noise.length; i++){
         const tx = i%twidth;
         const ty = Math.floor(i/twidth);
@@ -30,12 +30,14 @@ Crafty.scene("world", function(){
             x: tx * TILESZ.x + left,
             y: ty * TILESZ.y + top
         }
-        if( v > 0.75){
-            Crafty.e('Tree').attr(pos);
+        if(v > 0.96){
+            Crafty.e('Rocks').attr(pos)
+        }else if( v > 0.75){
+            Crafty.e('Tree').attr(pos)
         }else if(v > 0.6){
-            Crafty.e('Grass').attr(pos);
+            Crafty.e('Grass').attr(pos)
         }else if(v > 0.5){
-            Crafty.e('Dirt').attr(pos);
+            Crafty.e('Dirt').attr(pos)
         }else if(v < 0.02){
             Crafty.e('EnvObj, Mouse').attr(pos).attr({touched:false}).bind('MouseUp', e=> {
                 Crafty.trigger("showMessages", [`Just some bones.`]);
@@ -69,7 +71,7 @@ Crafty.scene("world", function(){
     generate_quest_items(quest);
 
     player.attr({quest:quest});
-    Crafty.trigger("showMessages", [`Your name is ${player.name}.<br><br>${quest.describe(player.name)}`]);
+    Crafty.trigger("showMessages", [`Your name is ${player.name}.<br><br>${quest.describe("You")}`]);
 
 });
 
