@@ -1,5 +1,4 @@
 import perlin from 'perlin-noise';
-import { build_quest } from "../quests/quest.js";
 import { generate_quest } from "../quests/questgen";
 import { items,npcs } from "../assets";
 
@@ -45,8 +44,8 @@ Crafty.scene("world", function(){
         }
     }
     
-    const player = Crafty.e('Character').attr({x:400,y:400,z:1000,name:"Wilbur"});
-
+    const player = Crafty.e('Character').attr({x:width/2,y:width/2,z:0,name:"Wilbur"});
+    window.player = player;
 
     const west = Crafty.e('2D, Collision, Wall').attr({
         x:left-5,y:top,w:5,h:height,name:"west"
@@ -66,6 +65,7 @@ Crafty.scene("world", function(){
     console.log("Building Quest");
 
     const quest = generate_quest(items,npcs);
+    window.quest = quest;
     console.log(quest);
     Crafty.trigger("questUpdate",quest);
     generate_quest_items(quest);
@@ -82,27 +82,26 @@ Crafty.scene("world", function(){
 // TODO accommodate for multiple items
 function generate_quest_items(quest){
     function walk_quest(q){
-        q.requires.forEach( f => {
-            console.log("requires",typeof(f));
-            if(f.type == "inventory"){
-                console.log("adding ",f.required)
-                Crafty.e(`Pickup, ${f.required}`).attr({ 
-                    // For now we randomly place items for quest
-                    x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2) , 
-                    y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
-                    item: f.required
-                });
-            }else if(f.type == "action"){
-                console.log(`Adding ${f.npc}`)
-                Crafty.e(`NPC, ${f.npc}`).attr({
-                    // For now we randomly place items for quest
-                    x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2), 
-                    y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
-                    name: f.npc
-                })
-            }
-        })
-        q.depends.forEach( subq => { walk_quest(subq); });
+        if(q.type == "inventory"){
+            console.log("adding ",q.required)
+            Crafty.e(`Pickup, ${q.required}`).attr({ 
+                // For now we randomly place items for quest
+                x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2) , 
+                y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
+                item: q.required,
+                requirement: q,
+            });
+        }else if(q.type == "action"){
+            console.log(`Adding ${q.npc}`)
+            Crafty.e(`NPC, ${q.npc}`).attr({
+                // For now we randomly place items for quest
+                x: Crafty.viewport.width*margin + Math.random()*Crafty.viewport.width * (1-margin*2), 
+                y: Crafty.viewport.height*margin + Math.random()*Crafty.viewport.height * (1-margin*2),
+                name: q.npc,
+                requirement: q,
+            })
+        }
+        q.subreq.forEach( subq => { walk_quest(subq); });
     }
     walk_quest(quest);
 }

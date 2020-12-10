@@ -1,75 +1,65 @@
-
-// TODO Create Quest Dependency Tree
-// Thoughts
-// - depends - subquests to fulfill
-// - requires - items to obtain for completing subquest
-// - actions - actions to complete for satisfying subquest
-// - triggers - trigger event when a subquest is complete
-// To play game, you solve dependency trees to achieve main quest
-export class Quest{
-    constructor(name){
-        this.name = name;
-        this.requires = [];
-        this.depends = [];
-        this.complete = false;
-    }
-
-    add_dependency(subquest){ this.depends.push(subquest) }
-    add_requirement(requirement){ this.requires.push(requirement) }
-
-    update(character){
-        var complete = true;
-        this.depends.forEach( dep => { complete &= dep.update(character); });
-        this.requires.forEach( rq => { complete &= rq.update(character); });
-        this.complete = complete;
-        return complete;
-    }
-
-    describe(character_name){
-        var txt = ''; //`${character_name} must ${this.name}. `;
-        if(this.requires.length){
-            //txt += `To do this, ${character_name} must `;
-            txt += `${character_name} must `;
-
-            for(var i=0;i<this.requires.length;i++){
-                if(this.requires.length == 1){
-                    txt += ` ${this.requires[i].name.toLowerCase()}`
-                }else if( i < this.requires.length-1 ){
-                    txt += ` ${this.requires[i].name.toLowerCase()}, `
-                }else{ txt += ` and ${this.requires[i].name.toLowerCase()}`}
-            } 
-            txt += '. ';
-        }
-        /* Let's not show subtasks, they need to be discovered
-        if(this.depends.length){
-            txt += `To do this, ${character_name} must`
-            for(var i=0;i<this.depends.length;i++){
-                if(this.depends.length == 1){
-                    txt += ` ${this.depends[i].name.toLowerCase()}`
-                }else if( i < this.depends.length-1 ){
-                    txt += ` ${this.depends[i].name.toLowerCase()}, `
-                }else{ txt += `and ${this.depends[i].name.toLowerCase()}`}
-            } 
-            txt += '.';
-            this.depends.forEach( subq => {
-                txt += subq.describe(character_name);
-            })
-        }
-        */
-        return txt;
-    }
-}
+   
 
 export class BaseRequirement{
     constructor(name,required){
         this.name = name;
         this.required = required;
+        this.subreq = [];
         this.satisfied = false;
     }
 
+    can_complete(character){
+        var fulfilled = true;
+        this.subreq.forEach( rq => { fulfilled &= rq.update(character); });
+        return fulfilled;
+    }
+
     update(character){
+        if(!this.can_complete(character)){
+            return false
+        }
         return this.satisfied;
     } 
+
+    describe(character_name,explain=false){
+        var txt = `${character_name} must ${this.name}. `;
+
+        const satisfied = this.subreq.filter( r => r.satisfied)
+        const incomplete = this.subreq.filter( r => !r.satisfied)
+        
+        if(explain && satisfied.length == 0){ txt = "First, " }
+
+        if(incomplete.length){
+            txt += `To do this, ${character_name} must `;
+
+            for(var i=0;i<incomplete.length;i++){
+                if(incomplete.length == 1){
+                    txt += ` ${incomplete[i].name.toLowerCase()}`
+                }else if( i < incomplete.length-1 ){
+                    txt += ` ${incomplete[i].name.toLowerCase()}, `
+                }else{ txt += ` and ${incomplete[i].name.toLowerCase()}`}
+            } 
+            txt += '. ';
+        }
+
+        if(satisfied.length){
+            if(character_name == "You"){
+                txt += ` ${character_name} have completed `;
+            }else{
+                txt += ` ${character_name} has completed `;
+            }
+
+            for(var i=0;i<satisfied.length;i++){
+                if(satisfied.length == 1){
+                    txt += ` ${satisfied[i].name.toLowerCase()}`
+                }else if( i < satisfied.length-1 ){
+                    txt += ` ${satisfied[i].name.toLowerCase()}, `
+                }else{ txt += ` and ${satisfied[i].name.toLowerCase()}`}
+            } 
+            txt += '. ';
+        }
+        return txt
+    }
 } 
 
 export class InventoryRequirement extends BaseRequirement {
@@ -77,7 +67,9 @@ export class InventoryRequirement extends BaseRequirement {
         super(name,required);
         this.type = "inventory";
     }
+
     update(character){
+        this.satisfied = super.update(character)
         if( character.inventory.filter( i => i == this.required).length > 0 ){
             this.satisfied = true;
         }
@@ -91,6 +83,7 @@ export class ActionRequirement extends BaseRequirement {
         this.npc = npc;
         this.type = "action";
     }
+
     action_triggered(){
         this.satisfied = true;
     }

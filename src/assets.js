@@ -2,33 +2,33 @@ import spritesheet from './colored_transparent.png';
 
 
 export const items = {
-    "yellow_key": {sprite:[32,11]},
-    "blue_key": {sprite:[33,11]},
-    "red_key": {sprite:[34,11]},
-    "sword": {sprite:[33,8]}, 
-    "shield": {sprite:[37,3]},
-    "potion": {sprite:[32,13]},
-    "boat": {sprite:[11,19]},
-    "crossbow": {sprite:[37,5]},
-    "shovel": {sprite:[42,5]},
-    "crown": {sprite:[43,2]},
-    "gauntlets":{sprite:[41,0]},
-    "helm":{sprite:[34,0]},
-    "scroll":{sprite:[33,15]}
+    "yellow_key": {sprite:[32,11],lvl:3},
+    "blue_key": {sprite:[33,11],lvl:3},
+    "red_key": {sprite:[34,11],lvl:3},
+    "sword": {sprite:[33,8],lvl:3}, 
+    "shield": {sprite:[37,3],lvl:3},
+    "potion": {sprite:[32,13],lvl:3},
+    "boat": {sprite:[11,19],lvl:4},
+    "crossbow": {sprite:[37,5],lvl:4},
+    "shovel": {sprite:[42,5],lvl:4},
+    "crown": {sprite:[43,2],lvl:1},
+    "gauntlets":{sprite:[41,0],lvl:3},
+    "helm":{sprite:[34,0],lvl:2},
+    "scroll":{sprite:[33,15],lvl:1}
 }
 export const npcs = {
-    "ogre": {sprite:[24,3]}, 
-    "ghost": {sprite:[26,6]}, 
-    "demon": {sprite:[27,2]},
-    "wizard": {sprite:[24,1]},
-    "warlock": {sprite:[31,1]},
-    "spider": {sprite:[28,5]},
-    "kraken": {sprite:[25,8]},
-    "bat": {sprite:[26,8]},
-    "dwarf":{sprite:[26,9]},
-    "troll":{sprite:[25,9]},
-    "dragon":{sprite:[29,8]},
-    "rat":{sprite:[31,8]},
+    "ogre": {sprite:[24,3],lvl:3}, 
+    "ghost": {sprite:[26,6],lvl:3}, 
+    "demon": {sprite:[27,2],lvl:1},
+    "wizard": {sprite:[24,1],lvl:1},
+    "warlock": {sprite:[31,1],lvl:2},
+    "spider": {sprite:[28,5],lvl:4},
+    "kraken": {sprite:[25,8],lvl:1},
+    "bat": {sprite:[26,8],lvl:4},
+    "dwarf":{sprite:[26,9],lvl:2},
+    "troll":{sprite:[25,9],lvl:2},
+    "dragon":{sprite:[29,8],lvl:1},
+    "rat":{sprite:[31,8],lvl:4},
 }
 
 // Using kenney.nl 1bit
