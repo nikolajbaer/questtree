@@ -28,7 +28,8 @@ Crafty.c('Character', {
                 [`${this.name}, you handsome devil!`]
             )
         })
-        this.onHit("Pickup",function(hitData){
+        this.onHit("Pickup",function(hitData,hit_on){
+            if(!hit_on){ return }
             hitData.forEach( pickup_hit => {
                 const pickup = pickup_hit.obj
                 const item = pickup.interact(this) 
@@ -45,7 +46,8 @@ Crafty.c('Character', {
                 Crafty.trigger("questUpdate",this.quest);
             });
         })
-        this.onHit("NPC",function(hitData){
+        this.onHit("NPC",function(hitData,hit_on){
+            if(!hit_on){ return }
             hitData.forEach( npc_hit => {
                 const npc = npc_hit.obj
                 //Crafty.trigger("showMessages",[`${this.name} picked up a ${item.item}`]);

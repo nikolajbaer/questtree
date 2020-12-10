@@ -39,6 +39,10 @@ function main(){
     // Wire up our popup
     popup_div = document.querySelectorAll(".popup")[0];
     document.querySelectorAll(".popup .close")[0].addEventListener("click", e => {
+        // if this is the intro and the music box is checked, start with music
+        if(document.getElementById("music_at_start") && document.getElementById("music_at_start").checked){
+            music = gen_music() 
+        }
         ack_popup();
     })
 
@@ -46,7 +50,12 @@ function main(){
         Crafty.enterScene("world")
     })
 
-    var music_on = false
+    document.getElementById("describe_quest").addEventListener("click", e => {
+        show_popup(quest.describe("You"))
+    })
+
+
+    var music_on = true
     document.getElementById("mute").addEventListener("click", e => {
         if( music == null){
             music = gen_music()
@@ -56,7 +65,6 @@ function main(){
             e.target.innerHTML= "music "  + ((music.state == "started")?"off":"on")
         }
     })
-
 
     /*
     if(window.localStorage != undefined && window.localStorage.getItem("questtree-intro") == null){

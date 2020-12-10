@@ -126,3 +126,14 @@ button.close {
     color: white;
     font-size: 8pt;
 }
+
+.popup .popup-bottom {
+    position: absolute;
+    bottom: 10px;
+    right: 150px; 
+}
+
+.popup-bottom input {
+    border: 1px solid #666;
+    background-color: #ccc5b7; 
+}
